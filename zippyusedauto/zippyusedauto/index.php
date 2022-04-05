@@ -1,5 +1,5 @@
 <?php
-//require('../zippyusedauto/model/database.php');
+require('../zippyusedauto/model/database.php');
 require('../zippyusedauto/model/vehicles_db.php');
 require('../zippyusedauto/model/types_db.php');
 require('../zippyusedauto/model/makes_db.php');
