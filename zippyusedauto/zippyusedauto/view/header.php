@@ -12,5 +12,16 @@
 <!-- the body section -->
 <body>
 <div class="container">
-<header><h1>Zippy Used Auto</h1></header>
-<hr>
+    <div mb-3 style="float: right;">
+    <?php if ($action != 'register' && $action != 'logout' && empty($_SESSION['userid'])){
+    $register = '<h4><a href="?action=register">Register</a></h4>';
+    echo $register;
+
+    }else if ($action != 'register' && $action != 'logout' && isset($_SESSION['userid'])){
+        $register = '<h5><a href="?action=logout">(Sign Out)</a></h5>';
+        echo "Welcome " . $_SESSION['userid'] . "! $register";
+    }
+    ?>
+    </div>
+    <header><h1>Zippy Used Auto</h1></header>
+    <hr>

@@ -1,4 +1,11 @@
 <?php
+// Start session management with a persistent cookie
+$lifetime = 60 * 60 * 24 * 14; // 2 weeks in seconds
+session_set_cookie_params($lifetime, '/');
+session_start();
+
+
+// Include database
 require('../zippyusedauto/model/database.php');
 require('../zippyusedauto/model/vehicles_db.php');
 require('../zippyusedauto/model/types_db.php');
@@ -33,6 +40,15 @@ require('../zippyusedauto/model/classes_db.php');
         }
     }
 
+     $firstname = filter_input(INPUT_POST, 'firstname', FILTER_UNSAFE_RAW);
+     if(!$firstname){
+        $firstname = filter_input(INPUT_GET, 'firstname', FILTER_UNSAFE_RAW);
+     }
+
+     if (isset($firstname)){
+         $_SESSION['userid'] = $firstname;
+     }
+
 
     if ($action == 'list_vehicles') {
         $make_name = get_make_name($make_id);
@@ -43,5 +59,17 @@ require('../zippyusedauto/model/classes_db.php');
         $classes = get_classes();
         $vehicles = get_vehicles_by_ID($make_id, $type_id, $class_id, $order_list);
         include('../zippyusedauto/view/vehicle_list.php');
+
+    }else if ($action == 'register') {
+        include('../zippyusedauto/view/register.php');
+
+    }else if ($action == 'logout') {
+        include('../zippyusedauto/view/logout.php');
+        $_SESSION = array();
+        session_destroy();
+        $name = session_name();
+        $expire = strtotime('-1 year');
+        setcookie($name, '', $expire);
+
     }
 ?>
